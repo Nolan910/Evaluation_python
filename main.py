@@ -1,6 +1,11 @@
 import pandas as pd
-# import matplotlib.pyplot as plt
-import math
+import matplotlib.pyplot as plt                             #EX2
+import math                                                 #EX3
+import numpy as np                                          #EX4
+from sklearn.linear_model import LinearRegression           #EX3 / 4   
+from sklearn.model_selection import train_test_split        #Ex4
+from sklearn.metrics import mean_absolute_error, r2_score   #Ex4
+
 
 #------------------#Exercice 1------------------
 
@@ -34,8 +39,8 @@ cinemas_columns = [
 cinemas_filtered_columns = get_interesting_colums(cinemas, cinemas_columns)
 statistiques = pd.DataFrame(cinemas_filtered_columns)
 
-print("cinemas infos")
-print(statistiques.head())
+# print("cinemas infos")
+# print(statistiques.head())
 
 
 #------------------#Exercice 2------------------
@@ -131,3 +136,58 @@ e_correlation = e_soustraction / e_valeur_a_diviser
 
 # print("Corrélation entre le nombre d'écrans et les entrées de 2022")
 # print(e_correlation)
+
+
+#Nuage de points fauteuils
+plt.scatter(fauteuils, entrées_2022)
+x = fauteuils.values.reshape(-1, 1)
+y = entrées_2022.values
+
+model = LinearRegression()
+model.fit(x, y)
+prediction = model.predict(x)
+plt.plot(fauteuils, prediction, color='red', label='Régression linéaire')
+plt.title("Nuage de points avec régression linéaire")
+plt.xlabel("Nombre de fauteuils")
+plt.ylabel("Entrées 2022")
+# plt.show()
+
+
+#Nuage de points écrans
+plt.scatter(écrans, entrées_2022)
+x = écrans.values.reshape(-1, 1)
+y = entrées_2022.values
+
+model = LinearRegression()
+model.fit(x, y)
+prediction = model.predict(x)
+plt.plot(écrans, prediction, color='blue', label='Régression linéaire')
+plt.title("Nuage de points avec régression linéaire")
+plt.xlabel("Nombre d'écrans")
+plt.ylabel("Entrées 2022")
+# plt.show()
+
+#------------------#Exercice 4------------------
+
+données_2021_2022 = cinemas[cinemas['Entrées'].isin([2021, 2022])]
+
+population_commune = cinemas['population de la commune']
+
+#Variable explicative
+VExplicative = données_2021_2022[['écrans', 'fauteuils', 'population_commune']]
+
+#Variable cible
+VCible = données_2021_2022[['Entrées 2021','Entrées 2022']]
+
+#Split train/test
+VExplicative_train, VExplicative_test, VCible_train, VCible_test = train_test_split(VExplicative, VCible, test_size=0.2, random_state=42)
+
+#Modèle de régression linéaire
+rl_model = LinearRegression()
+rl_model.fit(VCible_train, VExplicative_train)
+
+#Prédiction
+VCible_pred = rl_model.predict(VExplicative_test)
+
+#coefficient de détermination (R²)
+r2 = r2_score(VCible_test, VCible_pred)
