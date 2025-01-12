@@ -1,7 +1,36 @@
 import pandas as pd
 
+#------------------#Exercice 1------------------
 
-cinemas= pd.read_csv("./data/cinemas.csv", sep=';')
-cinemas_df = pd.DatafFrame(cinemas)
+def get_clean_file(file_path):
+    return (pd.read_csv(file_path, sep=';', encoding='utf-8')
+            .drop_duplicates()
+            .dropna())
+            #On supprime les doublons et les lignes contenant des valeurs vides
 
-print(cinemas_df)
+def get_interesting_colums(df, columns):
+    missing_columns = [col for col in columns if col not in df.columns]
+    if missing_columns:
+        print(f"Columns missing")
+        return pd.DataFrame()
+    return df[columns]
+
+
+cinemas= get_clean_file("./data/cinemas.csv")
+cinemas_columns = [
+    #On garde les valeurs utiles à la réalisation de l'exercice*
+    "commune",
+    "population de la commune",
+    "région administrative",
+    "écrans",
+    "fauteuils",
+    "entrées 2022",
+    "entrées 2021",
+    "évolution entrées"
+]
+
+cinemas_filtered_columns = get_interesting_colums(cinemas, cinemas_columns)
+statistiques = pd.DataFrame(cinemas_filtered_columns)
+
+print("cinemas infos")
+print(statistiques.head())
