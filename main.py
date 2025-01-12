@@ -32,5 +32,13 @@ cinemas_columns = [
 cinemas_filtered_columns = get_interesting_colums(cinemas, cinemas_columns)
 statistiques = pd.DataFrame(cinemas_filtered_columns)
 
-print("cinemas infos")
-print(statistiques.head())
+# print("cinemas infos")
+# print(statistiques.head())
+
+
+#------------------#Exercice 2------------------
+
+cinemas['entrées par fauteuil 2022'] = cinemas["entrées 2022"] / cinemas["fauteuils"]
+entrée_moyenne_par_région = cinemas.groupby('région administrative')['entrées par fauteuil 2022'].mean()
+
+print(entrée_moyenne_par_région)
