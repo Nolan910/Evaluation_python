@@ -1,5 +1,5 @@
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import math
 
 #------------------#Exercice 1------------------
@@ -34,8 +34,8 @@ cinemas_columns = [
 cinemas_filtered_columns = get_interesting_colums(cinemas, cinemas_columns)
 statistiques = pd.DataFrame(cinemas_filtered_columns)
 
-# print("cinemas infos")
-# print(statistiques.head())
+print("cinemas infos")
+print(statistiques.head())
 
 
 #------------------#Exercice 2------------------
@@ -97,8 +97,8 @@ f_valeur_a_diviser = math.sqrt((f_nombre_total_de_valeurs * f_somme_carre_fauteu
 
 f_correlation = f_soustraction / f_valeur_a_diviser
 
-print("Corrélation entre le nombre de fauteuils et les entrées de 2022")
-print(f_correlation)
+# print("Corrélation entre le nombre de fauteuils et les entrées de 2022")
+# print(f_correlation)
 
 
 #Corrélation écrans/entrées
@@ -129,5 +129,5 @@ e_valeur_a_diviser = math.sqrt((e_nombre_total_de_valeurs * e_somme_carre_écran
 
 e_correlation = e_soustraction / e_valeur_a_diviser
 
-print("Corrélation entre le nombre d'écrans et les entrées de 2022")
-print(e_correlation)
+# print("Corrélation entre le nombre d'écrans et les entrées de 2022")
+# print(e_correlation)
